@@ -1,0 +1,193 @@
+@import '@fontsource-variable/nunito/wght.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --c-paper: 255 248 236; /* #FFF8EC */
+    --c-panel: 255 255 255;
+    --c-fg: 31 28 46; /* ink */
+    --c-muted: 74 69 96;
+    --dots: rgb(31 28 46 / 0.09);
+    color-scheme: light;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --c-paper: 20 19 28; /* #14131C */
+      --c-panel: 34 33 45; /* #22212D */
+      --c-fg: 244 241 250;
+      --c-muted: 190 186 208;
+      --dots: rgb(255 255 255 / 0.05);
+      color-scheme: dark;
+    }
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 1rem;
+  }
+
+  body {
+    @apply bg-paper font-sans text-fg antialiased;
+    font-weight: 600;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  /* Fokus-Ring im Comic-Stil: gelber Ring mit Tintenkontur */
+  :focus-visible {
+    outline: 3px solid #1f1c2e;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 7px #ffd338;
+    border-radius: 10px;
+  }
+
+  ::selection {
+    background: #ffd338;
+    color: #1f1c2e;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Weiße Karte mit Tintenrand und hartem Schatten */
+  .panel {
+    @apply rounded-comic border-3 border-ink bg-panel shadow-comic;
+  }
+
+  /* Große weiße Überschrift mit hartem Tintenschatten */
+  .title-pop {
+    color: #fff;
+    text-shadow: 4px 4px 0 #1f1c2e;
+    -webkit-text-stroke: 1.5px #1f1c2e;
+    paint-order: stroke fill;
+  }
+
+  /* Pillen-Button mit hartem Schatten, der beim Drücken „einrastet“ */
+  .btn-comic {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-3 border-ink px-6 py-3 font-black text-ink shadow-comic-sm;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
+  }
+  .btn-comic:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 #1f1c2e;
+  }
+  .btn-comic:active {
+    transform: translate(4px, 4px);
+    box-shadow: 0 0 0 #1f1c2e;
+  }
+
+  /* Comic-Etikett: kleine Pille, Großbuchstaben, gesperrt */
+  .tag-comic {
+    @apply inline-flex items-center gap-1.5 rounded-full border-2 border-ink px-3 py-0.5 text-xs font-black uppercase text-ink shadow-[2px_2px_0_#1F1C2E];
+    letter-spacing: 0.12em;
+  }
+
+  /* Karte, die beim Hover leicht kippt */
+  .tilt-hover {
+    transition: transform 200ms cubic-bezier(0.3, 0.7, 0.4, 1.4);
+  }
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .tilt-hover:hover {
+      transform: rotate(-1deg) translateY(-2px);
+    }
+    .tilt-hover:nth-child(even):hover {
+      transform: rotate(1deg) translateY(-2px);
+    }
+  }
+}
+
+@layer utilities {
+  /* Strahlenkranz in der Bereichsfarbe: --burst setzen (z. B. per style oder .burst-steps) */
+  .bg-sunburst {
+    --burst: #2a66eb;
+    background-color: var(--burst);
+    background-image: repeating-conic-gradient(
+      from 0deg at var(--burst-x, 50%) var(--burst-y, 50%),
+      color-mix(in srgb, var(--burst) 82%, #fff) 0deg 9deg,
+      var(--burst) 9deg 18deg
+    );
+  }
+  .burst-steps {
+    --burst: #21d18f;
+  }
+  .burst-flights {
+    --burst: #ff9e21;
+  }
+  .burst-cycling {
+    --burst: #b866ff;
+  }
+  .burst-sky {
+    --burst: #4fb3ff;
+  }
+  .burst-skyDeep {
+    --burst: #2a66eb;
+  }
+  .burst-sun {
+    --burst: #ffd338;
+  }
+
+  /* Rasterpunkte als Overlay (::after), damit sie über dem Strahlenkranz liegen */
+  .halftone {
+    position: relative;
+    isolation: isolate;
+  }
+  .halftone::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: radial-gradient(rgb(31 28 46 / 0.16) 1.4px, transparent 1.8px);
+    background-size: 12px 12px;
+    -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+    mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  }
+  /* Rasterpunkte auf Papier (dezent, mit Dark-Mode-Farbe) */
+  .bg-dots {
+    background-image: radial-gradient(var(--dots) 1.4px, transparent 1.8px);
+    background-size: 14px 14px;
+  }
+
+  /* Hereinschweben beim Scrollen. Nur aktiv, wenn JS läuft (Klasse .js am <html>). */
+  @media (prefers-reduced-motion: no-preference) {
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(28px) rotate(var(--reveal-rotate, 0deg));
+      transition:
+        opacity 600ms ease,
+        transform 700ms cubic-bezier(0.2, 0.8, 0.3, 1.15);
+    }
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}

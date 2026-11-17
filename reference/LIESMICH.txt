@@ -1,0 +1,31 @@
+Bilder für die Website von Schrittheld / Step Hero
+===================================================
+
+Den Ordner "reference" in den Root des Website-Projekts legen (neben package.json).
+Die Website übernimmt daraus die Bilder, die sie braucht, und optimiert sie.
+
+icon/
+  app-icon-1024.png      App-Icon in voller Größe (Hero, App-Store-Abschnitt)
+  icon-512.png           PWA-Manifest / große Kachel
+  icon-192.png           PWA-Manifest
+  apple-touch-icon.png   180 x 180, für <link rel="apple-touch-icon">
+  favicon-32.png         Favicon
+
+appstore/de, appstore/en
+  01–05                  App-Store-Poster (1320 x 2868) mit Überschrift und echtem Screenshot:
+                         Spielbrett, Ziele mit Foto, Freunde, Treppen, Abzeichen
+
+purchases/
+  kostuem-paket.png, zeitraeume.png, rad-challenge.png, alles-freischalten.png   (Deutsch, 1024 x 1024)
+  periods-en.png, bike-challenge-en.png, unlock-everything-en.png               (Englisch, 1024 x 1024)
+  (Das Kostüm-Paket-Bild gibt es nur auf Deutsch.)
+
+avatars/
+  14 Figuren mit transparentem Hintergrund (600 x 600) für die Avatar-Galerie
+
+og/
+  og-image-de.png, og-image-en.png   Vorschaubild beim Teilen (Open Graph, 1200 x 630)
+
+Nicht enthalten:
+  Das offizielle App-Store-Badge („Laden im App Store“ / „Download on the App Store“).
+  Apple erlaubt nur die Originaldatei: https://developer.apple.com/app-store/marketing/guidelines/
