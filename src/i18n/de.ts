@@ -56,9 +56,8 @@ export const de: Dict = {
       'Leg deinen Heimatort fest, und jedes Dorf und jede Stadt rundherum wird zum Etappenziel für deinen **selbst gestalteten Comic-Helden**. Für iPhone und Apple Watch.',
     facts: ['Kein Konto', 'Keine Werbung', 'Kein Tracking'],
     screenshotAlt:
-      'Schrittheld auf dem iPhone: die Route als 3D-Spielbrett mit Etappenzielen und dem Helden unterwegs zum nächsten Ort',
+      'Drei iPhones mit Schrittheld: die Route als 3D-Spielbrett, das nächste Etappenziel mit Foto und die Treppen-Challenge mit berühmten Bauwerken, davor einige der Comic-Helden',
     iconAlt: 'App-Icon von Schrittheld',
-    mascotAlt: '',
   },
 
   features: {
@@ -92,6 +91,13 @@ export const de: Dict = {
         body: 'Deine Reise liegt als Spielbrett auf der echten Karte: Felder, Ortsschilder und dein Held mittendrin. Die Treppen-Challenge wird zur Stufenlandschaft.',
         points: ['Auf der echten Karte', 'Zwischen 2D und 3D umschalten'],
         alt: 'Die Route als 3D-Spielbrett auf der Karte mit nummerierten Etappen',
+      },
+      world: {
+        tag: 'Weltreise',
+        title: 'Einmal um die Welt',
+        body: 'Alle Schritte seit Beginn deiner Aufzeichnung ergeben eine Reise rund um den Globus. Auf dem Erdball siehst du, wie weit du schon gekommen bist, und welche Metropole als Nächstes wartet.',
+        points: ['Alle Schritte seit Beginn, in Kilometern', 'Rom, Tokio, New York, Rio …'],
+        alt: 'Weltreise: Gesamtschritte und Kilometer, darunter der Erdball mit der bisherigen Route',
       },
       friends: {
         tag: 'Freunde',
@@ -135,12 +141,15 @@ export const de: Dict = {
       { title: 'Gehen, steigen, radeln', body: 'Schritte, Stockwerke und Rad-Kilometer kommen automatisch aus Apple Health.' },
       { title: 'Ziele erreichen', body: 'Hak Etappe um Etappe ab, sammle Abzeichen und überhol deine Freunde.' },
     ],
+    illustrationAlt:
+      'Comic-Landschaft: Der Fuchs-Held läuft mit Freunden auf einem Weg von Wächtersbach über Gelnhausen nach Frankfurt',
   },
 
   avatars: {
     tag: 'Dein Held',
     heading: 'Wer läuft für dich?',
     lead: '14 Tiere zum Start, dazu Farben, Hüte, Brillen und Outfits. Abzeichen schalten besondere Gegenstände frei.',
+    editorAlt: 'Profil mit Serien und Abzeichen und der Avatar-Editor mit Tieren, Farben und Mustern zur Auswahl',
     names: {
       'fuchs-held': 'Fuchs als Held',
       'katze-astronaut': 'Katze als Astronautin',
@@ -174,6 +183,11 @@ export const de: Dict = {
         title: 'Rad-Challenge',
         body: 'Eigene Route für deine Rad-Kilometer, mit Etappen wie zu Fuß.',
         alt: 'Rad-Challenge mit dem Helden auf dem Fahrrad',
+      },
+      worldTour: {
+        title: 'Weltreise',
+        body: 'Einmal um die ganze Welt, mit allen Schritten seit Beginn.',
+        alt: 'Weltreise: der Held vor dem Erdball mit Rom, Tokio, Rio und New York',
       },
       unlockAll: {
         title: 'Alles freischalten',

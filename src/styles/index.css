@@ -1,6 +1,13 @@
 @import '@fontsource-variable/nunito/wght.css';
 
 @tailwind base;
+
+/* Strahlenfarbe als echte Farbe anmelden, damit Animationen sie fließend überblenden können (CTA-Farbwechsel) */
+@property --burst {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: #2a66eb;
+}
 @tailwind components;
 @tailwind utilities;
 
@@ -91,9 +98,7 @@
   /* Pillen-Button mit hartem Schatten, der beim Drücken „einrastet“ */
   .btn-comic {
     @apply inline-flex items-center justify-center gap-2 rounded-full border-3 border-ink px-6 py-3 font-black text-ink shadow-comic-sm;
-    transition:
-      transform 120ms ease,
-      box-shadow 120ms ease;
+    transition: transform 120ms ease, box-shadow 120ms ease;
   }
   .btn-comic:hover {
     transform: translate(-1px, -1px);
@@ -153,6 +158,341 @@
   .burst-sun {
     --burst: #ffd338;
   }
+  .burst-berry {
+    --burst: #ff5c93;
+  }
+
+  /* Langsam drehender Strahlenkranz: eigene Ebene (::before), die per transform rotiert,
+     damit der Verlauf nicht in jedem Frame neu gemalt wird. Braucht overflow-hidden am Element. */
+  .burst-spin {
+    position: relative;
+    isolation: isolate;
+    background-image: none;
+  }
+  .burst-spin::before {
+    content: '';
+    position: absolute;
+    left: var(--burst-x, 50%);
+    top: var(--burst-y, 50%);
+    width: 300vmax;
+    height: 300vmax;
+    z-index: -2;
+    pointer-events: none;
+    background-image: repeating-conic-gradient(
+      from 0deg,
+      color-mix(in srgb, var(--burst) 82%, #fff) 0deg 9deg,
+      var(--burst) 9deg 18deg
+    );
+    transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .burst-spin::before {
+      animation: burst-spin 90s linear infinite;
+    }
+  }
+  @keyframes burst-spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+  /* Maße des Hero-Bildes, damit Strahlen-Mittelpunkt und Sterne sich am Bild ausrichten (sections/Hero.tsx).
+     Halbe Breite = halbe Containerbreite abzüglich Seitenabstand, Bild ist 16:10. */
+  .hero-burst {
+    --img-hw: min(576px, 50vw - 12px);
+    --img-hh: calc(var(--img-hw) * 0.625);
+    --hero-pb: 4rem;
+  }
+  @media (min-width: 640px) {
+    .hero-burst {
+      --img-hw: min(576px, 50vw - 24px);
+    }
+  }
+  @media (min-width: 768px) {
+    .hero-burst {
+      --hero-pb: 6rem;
+    }
+  }
+
+  /* Manga-Speed-Lines („Konzentrationslinien“): dünne, unregelmäßige Strahlen in Weiß und Tinte.
+     Drei Muster mit teilerfremden Abständen (7°, 11°, 13°) überlagern sich, so wirkt die Verteilung zufällig.
+     Die Mitte bleibt frei, nach außen werden die Linien kräftiger. Leichtes Flackern im Stufentakt. */
+  .manga-lines {
+    position: absolute;
+    left: var(--burst-x, 50%);
+    top: var(--burst-y, 50%);
+    width: 300vmax;
+    height: 300vmax;
+    z-index: -1;
+    pointer-events: none;
+    background-image:
+      repeating-conic-gradient(from 0deg, rgb(255 255 255 / 0.7) 0deg 0.3deg, transparent 0.3deg 7deg),
+      repeating-conic-gradient(from 2.5deg, rgb(255 255 255 / 0.45) 0deg 0.7deg, transparent 0.7deg 11deg),
+      repeating-conic-gradient(from 5deg, rgb(31 28 46 / 0.4) 0deg 0.45deg, transparent 0.45deg 13deg);
+    -webkit-mask-image: radial-gradient(circle, transparent 0 22vmax, #000 70vmax);
+    mask-image: radial-gradient(circle, transparent 0 22vmax, #000 70vmax);
+    transform: translate(-50%, -50%);
+    will-change: transform;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .manga-lines {
+      animation: manga-flicker 0.36s steps(1) infinite;
+    }
+  }
+  @keyframes manga-flicker {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    33% {
+      transform: translate(-50%, -50%) rotate(1.7deg);
+    }
+    66% {
+      transform: translate(-50%, -50%) rotate(-1.2deg);
+    }
+  }
+
+  /* Variante für kleinere Abschnitte: freie Mitte kleiner, Linien früher kräftig */
+  .manga-lines--tight {
+    -webkit-mask-image: radial-gradient(circle, transparent 0 9vmax, #000 38vmax);
+    mask-image: radial-gradient(circle, transparent 0 9vmax, #000 38vmax);
+  }
+
+  /* Hero: Farbe wandert fließend durch die ganze Palette, startend beim Blau des Hero-Bildes */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-burst {
+      animation: palette-cycle-hero 30s linear infinite;
+    }
+  }
+  @keyframes palette-cycle-hero {
+    0%,
+    100% {
+      --burst: #2a66eb;
+    }
+    14.3% {
+      --burst: #b866ff;
+    }
+    28.6% {
+      --burst: #ff5c93;
+    }
+    42.9% {
+      --burst: #ff9e21;
+    }
+    57.1% {
+      --burst: #ffd338;
+    }
+    71.4% {
+      --burst: #21d18f;
+    }
+    85.7% {
+      --burst: #4fb3ff;
+    }
+  }
+
+  /* CTA: Farbe wandert fließend durch die ganze Palette der App.
+     --burst ist per @property als Farbe angemeldet (siehe unten), nur so lässt sie sich überblenden.
+     Dunkelblau fehlt bewusst: Der Tintentext darunter wäre darauf zu kontrastarm. */
+  @media (prefers-reduced-motion: no-preference) {
+    .cta-burst {
+      animation: palette-cycle 24s linear infinite;
+    }
+  }
+  @keyframes palette-cycle {
+    0%,
+    100% {
+      --burst: #b866ff;
+    }
+    16.6% {
+      --burst: #ff5c93;
+    }
+    33.3% {
+      --burst: #ff9e21;
+    }
+    50% {
+      --burst: #ffd338;
+    }
+    66.6% {
+      --burst: #21d18f;
+    }
+    83.3% {
+      --burst: #4fb3ff;
+    }
+  }
+
+  /* CTA: Innenabstand oben als Variable, damit der Burst-Mittelpunkt genau hinter der Truppe sitzt */
+  .cta-burst {
+    --cta-pt: 6rem;
+    --crew-half: 3.5rem;
+  }
+  @media (min-width: 640px) {
+    .cta-burst {
+      --crew-half: 4rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .cta-burst {
+      --cta-pt: 8rem;
+    }
+  }
+
+  /* Comic-Impact (components/ImpactBurst.tsx): gezackte Explosion + Schockwellen */
+  .impact-burst {
+    position: absolute;
+    left: var(--burst-x, 50%);
+    top: var(--burst-y, 50%);
+    width: 0;
+    height: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+  /* Weißer Leuchtblitz hinter der Gruppe */
+  .impact-glow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(300px, 55vw, 560px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgb(255 255 255 / 0.95) 0 16%, rgb(255 255 255 / 0.45) 36%, rgb(255 255 255 / 0) 68%);
+    transform: translate(-50%, -50%);
+  }
+  .impact-ring {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: clamp(220px, 34vw, 360px);
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 6px solid rgb(255 255 255 / 0.85);
+    box-shadow:
+      0 0 0 3px #1f1c2e,
+      inset 0 0 0 3px #1f1c2e;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.4);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .impact-glow {
+      animation: impact-beat 1.6s steps(1) infinite;
+    }
+    .impact-ring {
+      animation: impact-ring 4.5s cubic-bezier(0.2, 0.7, 0.4, 1) infinite;
+    }
+  }
+  /* Harter Comic-Takt: groß, kleiner, normal – ohne Übergang */
+  @keyframes impact-beat {
+    0% {
+      scale: 1.08;
+    }
+    25% {
+      scale: 0.96;
+    }
+    50% {
+      scale: 1.02;
+    }
+    75% {
+      scale: 0.98;
+    }
+  }
+  @keyframes impact-ring {
+    0% {
+      opacity: 0.95;
+      transform: translate(-50%, -50%) scale(0.45);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(3.2);
+    }
+  }
+
+  /* Sterne im Hero (components/BurstStars.tsx) */
+  .burst-stars {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    display: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .burst-stars {
+      display: block;
+    }
+  }
+
+  /* Sternschnuppe: Hülle fliegt entlang des Winkels, der Stern darin bleibt aufrecht, der Schweif zeigt zur Mitte. */
+  .burst-stars .shooter {
+    position: absolute;
+    left: var(--burst-x, 50%);
+    top: var(--burst-y, 50%);
+    width: 0;
+    height: 0;
+    opacity: 0;
+    animation-name: shoot;
+    animation-iteration-count: infinite;
+    /* beschleunigt nach außen wie ein Zoom */
+    animation-timing-function: cubic-bezier(0.55, 0, 0.85, 0.4);
+    will-change: transform, opacity;
+  }
+  .burst-stars .shooter .star {
+    position: absolute;
+    width: var(--star-size);
+    height: var(--star-size);
+    left: calc(var(--star-size) / -2);
+    top: calc(var(--star-size) / -2);
+    transform: rotate(calc(-1 * var(--star-angle)));
+    filter: drop-shadow(0 0 6px rgb(255 255 255 / 0.55));
+  }
+  .burst-stars .shooter .tail {
+    position: absolute;
+    right: calc(var(--star-size) * 0.25);
+    top: -2.5px;
+    width: calc(var(--star-size) * 3.5);
+    height: 5px;
+    border-radius: 5px;
+    background: linear-gradient(to right, transparent, rgb(255 255 255 / 0.95));
+  }
+  @keyframes shoot {
+    0% {
+      opacity: 0;
+      transform: rotate(var(--star-angle)) translateX(var(--star-start, 0px)) scale(0.6);
+    }
+    12% {
+      opacity: 1;
+    }
+    70% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(var(--star-angle)) translateX(calc(var(--star-start, 0px) + 55vmax)) scale(1.25);
+    }
+  }
+
+  /* Feste Funkelsterne: kurz aufblitzen mit Dreh, dann lange Pause */
+  .burst-stars .twinkle {
+    position: absolute;
+    width: var(--star-size);
+    height: var(--star-size);
+    margin: calc(var(--star-size) / -2) 0 0 calc(var(--star-size) / -2);
+    transform: scale(0);
+    animation: twinkle 3.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgb(255 255 255 / 0.6));
+  }
+  @keyframes twinkle {
+    0%,
+    35%,
+    100% {
+      transform: scale(0) rotate(0deg);
+    }
+    48% {
+      transform: scale(1.2) rotate(20deg);
+    }
+    58% {
+      transform: scale(0.9) rotate(30deg);
+    }
+    68%,
+    85% {
+      transform: scale(1) rotate(45deg);
+    }
+  }
 
   /* Rasterpunkte als Overlay (::after), damit sie über dem Strahlenkranz liegen */
   .halftone {
@@ -165,7 +505,10 @@
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    background-image: radial-gradient(rgb(31 28 46 / 0.16) 1.4px, transparent 1.8px);
+    background-image: radial-gradient(
+      rgb(31 28 46 / 0.16) 1.4px,
+      transparent 1.8px
+    );
     background-size: 12px 12px;
     -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
     mask-image: linear-gradient(to bottom, #000, transparent 85%);
@@ -181,8 +524,7 @@
     .js .reveal {
       opacity: 0;
       transform: translateY(28px) rotate(var(--reveal-rotate, 0deg));
-      transition:
-        opacity 600ms ease,
+      transition: opacity 600ms ease,
         transform 700ms cubic-bezier(0.2, 0.8, 0.3, 1.15);
     }
     .js .reveal.is-visible {

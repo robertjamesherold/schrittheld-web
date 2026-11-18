@@ -2,11 +2,31 @@
  * Alle Bilder kommen aus reference/ und werden von vite-imagetools verkleinert,
  * in AVIF/WebP umgewandelt und mit Hash ausgeliefert. Die Originale bleiben unverändert.
  */
-import type { AvatarKey, FeatureKey, Locale, PurchaseKey } from '../i18n/types'
+import type { AvatarKey, Locale, PurchaseKey } from '../i18n/types'
 
-/* App-Store-Poster: per Zuschnitt nur der Handy-Teil (unten), ohne die gestaltete Überschrift. */
-const posters = import.meta.glob<ImagePicture>('../../reference/appstore/*/*.png', {
-  query: '?aspect=1320:2270&fit=cover&position=bottom&w=300;600&format=avif;webp;jpg&as=picture',
+/* Aufmacher (2400 x 1500): drei iPhones und Figuren vor blauem Strahlenkranz, ohne Text. */
+const heroes = import.meta.glob<ImagePicture>('../../reference/hero/*.jpg', {
+  query: '?w=720;1100;1600;2200&format=avif;webp;jpg&as=picture',
+  import: 'default',
+  eager: true,
+})
+
+/* Abschnittsbilder (1600 x 1200): zwei iPhones vor farbigem Comic-Hintergrund. */
+const sections = import.meta.glob<ImagePicture>('../../reference/sections/*/*.jpg', {
+  query: '?w=480;800;1200;1600&format=avif;webp;jpg&as=picture',
+  import: 'default',
+  eager: true,
+})
+
+/* Einzelne iPhones, freigestellt (transparent) – daher PNG statt JPEG als Rückfall. */
+const phones = import.meta.glob<ImagePicture>('../../reference/phones/*/*.png', {
+  query: '?w=280;560&format=avif;webp;png&as=picture',
+  import: 'default',
+  eager: true,
+})
+
+const illustrations = import.meta.glob<ImagePicture>('../../reference/illustrations/zu-fuss.png', {
+  query: '?w=600;1000;1600&format=avif;webp;jpg&as=picture',
   import: 'default',
   eager: true,
 })
@@ -23,12 +43,6 @@ const purchases = import.meta.glob<ImagePicture>('../../reference/purchases/*.pn
   eager: true,
 })
 
-const bikeFeature = import.meta.glob<ImagePicture>('../../reference/purchases/{rad-challenge,bike-challenge-en}.png', {
-  query: '?w=360;720&format=avif;webp;jpg&as=picture',
-  import: 'default',
-  eager: true,
-})
-
 export { default as appIcon } from '../../reference/icon/app-icon-1024.png?w=96;192&format=avif;webp;png&as=picture'
 
 function pick(map: Record<string, ImagePicture>, match: (path: string) => boolean): ImagePicture {
@@ -37,28 +51,37 @@ function pick(map: Record<string, ImagePicture>, match: (path: string) => boolea
   return hit[1]
 }
 
-/** Poster 01–05 je Sprache, über die Nummer gewählt (Dateinamen unterscheiden sich je Sprache). */
-export function poster(locale: Locale, nr: '01' | '02' | '03' | '04' | '05'): ImagePicture {
-  return pick(posters, (p) => p.includes(`/appstore/${locale}/${nr}-`))
-}
+export const heroImage = (locale: Locale): ImagePicture => pick(heroes, (p) => p.endsWith(`/hero/hero-${locale}.jpg`))
 
-/** Screenshot je Funktion. Rad hat kein Poster und nutzt das Rad-Challenge-Bild. */
-export const featureImage = (locale: Locale, key: FeatureKey): { pic: ImagePicture; phone: boolean } => {
-  const nr = ({ walk: '02', stairs: '04', board: '01', friends: '03', streaks: '05' } as const)[key as Exclude<FeatureKey, 'bike'>]
-  if (key === 'bike') {
-    return {
-      pic: pick(bikeFeature, (p) => p.endsWith(locale === 'de' ? 'rad-challenge.png' : 'bike-challenge-en.png')),
-      phone: false,
-    }
-  }
-  return { pic: poster(locale, nr), phone: true }
-}
+export type SectionKey = 'on-foot' | 'board' | 'stairs' | 'bike' | 'friends' | 'world' | 'avatar'
+export const sectionImage = (locale: Locale, key: SectionKey): ImagePicture =>
+  pick(sections, (p) => p.endsWith(`/sections/${locale}/${key}.jpg`))
+
+export type PhoneKey =
+  | 'foot'
+  | 'journey'
+  | 'board'
+  | 'stairs'
+  | 'climb'
+  | 'bike'
+  | 'bike-board'
+  | 'friends'
+  | 'badges'
+  | 'world'
+  | 'avatar'
+  | 'compass'
+export const phoneImage = (locale: Locale, key: PhoneKey): ImagePicture =>
+  pick(phones, (p) => p.endsWith(`/phones/${locale}/${key}.png`))
+
+/** Illustration „Zu Fuß“ ohne Text, für beide Sprachen gleich. */
+export const routeIllustration: ImagePicture = pick(illustrations, () => true)
 
 export const avatarImage = (key: AvatarKey): ImagePicture => pick(avatars, (p) => p.endsWith(`/${key}.png`))
 
 const purchaseFiles: Record<PurchaseKey, Record<Locale, string>> = {
   periods: { de: 'zeitraeume', en: 'periods-en' },
   bike: { de: 'rad-challenge', en: 'bike-challenge-en' },
+  worldTour: { de: 'weltreise', en: 'world-tour-en' },
   unlockAll: { de: 'alles-freischalten', en: 'unlock-everything-en' },
   // Das Kostüm-Paket gibt es nur auf Deutsch.
   costumes: { de: 'kostuem-paket', en: 'kostuem-paket' },

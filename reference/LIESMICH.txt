@@ -12,8 +12,22 @@ icon/
   favicon-32.png         Favicon
 
 appstore/de, appstore/en
-  01–05                  App-Store-Poster (1320 x 2868) mit Überschrift und echtem Screenshot:
-                         Spielbrett, Ziele mit Foto, Freunde, Treppen, Abzeichen
+  01–10                  App-Store-Poster (1320 x 2868) mit Überschrift und echtem Screenshot im iPhone-Rahmen:
+                         Zu Fuß, 3D-Spielbrett, Treppen, Freunde, Weltreise, Rad, Abzeichen, Avatar,
+                         Jahresreise, Kompass
+
+phones/de, phones/en
+  Einzelne iPhones mit Screenshot, freigestellt (transparenter Hintergrund, ca. 720 x 1400):
+  foot (Zu Fuß, Schritte), journey (Jahresreise in km), board (3D-Spielbrett), stairs (Treppen),
+  climb (Treppen-Spielbrett), bike (Rad), bike-board (Rad-Spielbrett), friends, badges, world,
+  avatar, compass
+
+sections/de, sections/en
+  Fertige Abschnittsbilder (1600 x 1200, JPEG) mit zwei iPhones vor farbigem Comic-Hintergrund:
+  on-foot (Schritte + Jahresreise), board, stairs, bike, friends, world, avatar
+
+hero/
+  hero-de.jpg, hero-en.jpg   Aufmacher (2400 x 1500): drei iPhones und die Figuren, ohne Text
 
 purchases/
   kostuem-paket.png, zeitraeume.png, rad-challenge.png, alles-freischalten.png   (Deutsch, 1024 x 1024)
@@ -22,6 +36,11 @@ purchases/
 
 avatars/
   14 Figuren mit transparentem Hintergrund (600 x 600) für die Avatar-Galerie
+
+illustrations/
+  zu-fuss.png              Illustration „Zu Fuß“ ohne Text (1600 x 1000)
+  zu-fuss-titel.png        mit Überschrift „Von Dorf zu Dorf, von Stadt zu Stadt“
+  on-foot-title-en.png     englisch: „From village to village, town to town“
 
 og/
   og-image-de.png, og-image-en.png   Vorschaubild beim Teilen (Open Graph, 1200 x 630)

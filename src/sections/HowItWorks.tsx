@@ -1,8 +1,10 @@
 import { Panel } from '../components/Panel'
+import { Picture } from '../components/Picture'
 import { SectionHeading } from '../components/SectionHeading'
 import { Sunburst } from '../components/Sunburst'
 import { toneBg, type Tone } from '../components/tones'
 import { useLocale } from '../i18n/useLocale'
+import { routeIllustration } from '../lib/images'
 
 const stepTones: Tone[] = ['steps', 'flights', 'cycling']
 
@@ -29,6 +31,14 @@ export const HowItWorks = () => {
             </Panel>
           ))}
         </ol>
+        <figure className="reveal mx-auto mt-14 max-w-4xl md:mt-20">
+          <Picture
+            pic={routeIllustration}
+            alt={t.how.illustrationAlt}
+            sizes="(min-width: 960px) 896px, 92vw"
+            imgClassName="block h-auto w-full rotate-1 rounded-comic border-3 border-ink shadow-comic-lg"
+          />
+        </figure>
       </div>
     </Sunburst>
   )

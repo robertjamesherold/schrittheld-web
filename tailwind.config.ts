@@ -23,6 +23,7 @@ export default {
         sky: '#4FB3FF',
         skyDeep: '#2A66EB',
         sun: '#FFD338',
+        berry: '#FF5C93',
       },
       fontFamily: {
         sans: ['"Nunito Variable"', 'ui-rounded', 'system-ui', 'sans-serif'],

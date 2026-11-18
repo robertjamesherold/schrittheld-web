@@ -7,9 +7,9 @@ export type Locale = (typeof locales)[number]
  */
 export type Rich = string
 
-export type FeatureKey = 'walk' | 'stairs' | 'bike' | 'board' | 'friends' | 'streaks'
+export type FeatureKey = 'walk' | 'stairs' | 'bike' | 'board' | 'world' | 'friends' | 'streaks'
 export type ExtraKey = 'hero' | 'watch' | 'privacy'
-export type PurchaseKey = 'periods' | 'bike' | 'unlockAll' | 'costumes'
+export type PurchaseKey = 'periods' | 'bike' | 'worldTour' | 'unlockAll' | 'costumes'
 export type AvatarKey =
   | 'fuchs-held'
   | 'katze-astronaut'
@@ -75,7 +75,6 @@ export interface Dict {
     facts: [string, string, string]
     screenshotAlt: string
     iconAlt: string
-    mascotAlt: string
   }
   features: {
     heading: string
@@ -87,11 +86,13 @@ export interface Dict {
     tag: string
     heading: string
     steps: [Step, Step, Step]
+    illustrationAlt: string
   }
   avatars: {
     tag: string
     heading: string
     lead: string
+    editorAlt: string
     names: Record<AvatarKey, string>
   }
   purchases: {

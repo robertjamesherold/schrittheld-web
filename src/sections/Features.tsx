@@ -1,7 +1,6 @@
 import { ComicTag } from '../components/ComicTag'
 import { Icon, type IconName } from '../components/Icon'
 import { Panel } from '../components/Panel'
-import { PhoneShot } from '../components/PhoneShot'
 import { Picture } from '../components/Picture'
 import { RichInline } from '../components/RichText'
 import { SectionHeading } from '../components/SectionHeading'
@@ -9,18 +8,29 @@ import { Sunburst } from '../components/Sunburst'
 import { toneBg, type Tone } from '../components/tones'
 import { useLocale } from '../i18n/useLocale'
 import type { ExtraKey, FeatureKey } from '../i18n/types'
-import { featureImage } from '../lib/images'
+import { phoneImage, sectionImage, type SectionKey } from '../lib/images'
 import { Link } from 'react-router-dom'
 
-const order: FeatureKey[] = ['walk', 'stairs', 'bike', 'board', 'friends', 'streaks']
+const order: FeatureKey[] = ['walk', 'board', 'stairs', 'bike', 'world', 'friends', 'streaks']
 
 const tones: Record<FeatureKey, Exclude<Tone, 'white'>> = {
   walk: 'steps',
+  board: 'sky',
   stairs: 'flights',
   bike: 'cycling',
-  board: 'sky',
-  friends: 'skyDeep',
+  world: 'skyDeep',
+  friends: 'berry',
   streaks: 'sun',
+}
+
+/** Fertiges Abschnittsbild je Funktion. Für Serien & Abzeichen gibt es keins, dort steht das einzelne iPhone. */
+const sectionFor: Partial<Record<FeatureKey, SectionKey>> = {
+  walk: 'on-foot',
+  board: 'board',
+  stairs: 'stairs',
+  bike: 'bike',
+  world: 'world',
+  friends: 'friends',
 }
 
 const extras: { key: ExtraKey; icon: IconName; tone: Tone }[] = [
@@ -40,27 +50,32 @@ export const Features = () => {
           {order.map((key, i) => {
             const item = t.features.items[key]
             const tone = tones[key]
-            const { pic, phone } = featureImage(locale, key)
+            const section = sectionFor[key]
             const flip = i % 2 === 1
             return (
-              <article key={key} aria-labelledby={`feature-${key}`} className="grid items-center gap-10 md:grid-cols-2 md:gap-16">
-                <Sunburst
-                  tone={tone}
-                  className={`overflow-hidden rounded-comic border-3 border-ink px-6 py-10 shadow-comic sm:py-12 ${flip ? 'md:order-last' : ''}`}
+              <article key={key} aria-labelledby={`feature-${key}`} className={`grid items-center gap-10 md:gap-14 ${flip ? 'md:grid-cols-[0.85fr_1.15fr]' : 'md:grid-cols-[1.15fr_0.85fr]'}`}>
+                <div
+                  className={`reveal ${flip ? 'md:order-last' : ''}`}
+                  style={{ ['--reveal-rotate' as string]: `${flip ? 3 : -3}deg` }}
                 >
-                  {phone ? (
-                    <PhoneShot pic={pic} alt={item.alt} rotate={flip ? 3 : -3} sizes="(min-width: 768px) 300px, 72vw" />
+                  {section ? (
+                    <Picture
+                      pic={sectionImage(locale, section)}
+                      alt={item.alt}
+                      sizes="(min-width: 1100px) 560px, (min-width: 768px) 52vw, 92vw"
+                      imgClassName={`block h-auto w-full rounded-comic border-3 border-ink shadow-comic-lg ${flip ? 'rotate-1' : '-rotate-1'}`}
+                    />
                   ) : (
-                    <div className="reveal mx-auto max-w-[360px]">
+                    <Sunburst tone={tone} center={{ x: '50%', y: '45%' }} className={`aspect-[4/3] overflow-hidden rounded-comic border-3 border-ink px-6 pt-8 shadow-comic-lg ${flip ? 'rotate-1' : '-rotate-1'}`}>
                       <Picture
-                        pic={pic}
+                        pic={phoneImage(locale, 'badges')}
                         alt={item.alt}
-                        sizes="(min-width: 768px) 360px, 80vw"
-                        imgClassName="h-auto w-full rotate-2 rounded-comic border-3 border-ink shadow-comic-lg"
+                        sizes="(min-width: 768px) 260px, 60vw"
+                        imgClassName="mx-auto block h-auto w-1/2 max-w-[260px] drop-shadow-comic"
                       />
-                    </div>
+                    </Sunburst>
                   )}
-                </Sunburst>
+                </div>
 
                 <div className="flex flex-col items-start gap-4">
                   <ComicTag tone={tone}>{item.tag}</ComicTag>

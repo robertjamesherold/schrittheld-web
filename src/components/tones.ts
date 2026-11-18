@@ -1,5 +1,5 @@
 /** Bereichs- und Akzentfarben. Klassen stehen ausgeschrieben, damit Tailwind sie findet. */
-export type Tone = 'steps' | 'flights' | 'cycling' | 'sky' | 'skyDeep' | 'sun' | 'white'
+export type Tone = 'steps' | 'flights' | 'cycling' | 'sky' | 'skyDeep' | 'sun' | 'white' | 'berry'
 
 export const toneBg: Record<Tone, string> = {
   steps: 'bg-steps text-ink',
@@ -10,6 +10,7 @@ export const toneBg: Record<Tone, string> = {
   skyDeep: 'bg-skyDeep text-white',
   sun: 'bg-sun text-ink',
   white: 'bg-white text-ink',
+  berry: 'bg-berry text-ink',
 }
 
 export const toneBurst: Record<Exclude<Tone, 'white'>, string> = {
@@ -19,4 +20,5 @@ export const toneBurst: Record<Exclude<Tone, 'white'>, string> = {
   sky: 'burst-sky',
   skyDeep: 'burst-skyDeep',
   sun: 'burst-sun',
+  berry: 'burst-berry',
 }

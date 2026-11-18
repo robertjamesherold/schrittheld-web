@@ -56,9 +56,8 @@ export const en: Dict = {
       'Pick your home town, and every village and city around it becomes a stage for **your very own comic hero**. For iPhone and Apple Watch.',
     facts: ['No account', 'No ads', 'No tracking'],
     screenshotAlt:
-      'Step Hero on iPhone: the route as a 3D game board with stages and the hero on the way to the next town',
+      'Three iPhones running Step Hero: the route as a 3D game board, the next stage with a photo, and the stairs challenge with famous landmarks, with some of the comic heroes in front',
     iconAlt: 'Step Hero app icon',
-    mascotAlt: '',
   },
 
   features: {
@@ -92,6 +91,13 @@ export const en: Dict = {
         body: 'Your journey sits on the real map as a game board: spaces, town signs and your hero right in the middle. The stairs challenge becomes a stepped landscape.',
         points: ['On the real map', 'Switch between 2D and 3D'],
         alt: 'The route as a 3D game board on the map with numbered stages',
+      },
+      world: {
+        tag: 'World Tour',
+        title: 'All the way around the world',
+        body: 'Every step since you started tracking adds up to a journey around the globe. The globe shows how far you have come and which city is waiting next.',
+        points: ['All your steps since day one, in kilometres', 'Rome, Tokyo, New York, Rio …'],
+        alt: 'World tour: total steps and kilometres, with the globe and the route so far below',
       },
       friends: {
         tag: 'Friends',
@@ -135,12 +141,15 @@ export const en: Dict = {
       { title: 'Walk, climb, ride', body: 'Steps, flights and cycling distance come in automatically from Apple Health.' },
       { title: 'Reach your goals', body: 'Tick off stage after stage, collect badges and overtake your friends.' },
     ],
+    illustrationAlt:
+      'Comic landscape: the fox hero and friends walking a path from Wächtersbach via Gelnhausen to Frankfurt',
   },
 
   avatars: {
     tag: 'Your Hero',
     heading: 'Who walks for you?',
     lead: '14 animals to start with, plus colours, hats, glasses and outfits. Badges unlock special items.',
+    editorAlt: 'Profile with streaks and badges, and the avatar editor with animals, colours and patterns to choose from',
     names: {
       'fuchs-held': 'Fox hero',
       'katze-astronaut': 'Astronaut cat',
@@ -174,6 +183,11 @@ export const en: Dict = {
         title: 'Bike Challenge',
         body: 'A route of its own for your cycling distance, with stages just like on foot.',
         alt: 'Bike challenge with the hero on a bicycle',
+      },
+      worldTour: {
+        title: 'World Tour',
+        body: 'All the way around the world, with every step since day one.',
+        alt: 'World tour: the hero in front of the globe with Rome, Tokyo, Rio and New York',
       },
       unlockAll: {
         title: 'Unlock Everything',
