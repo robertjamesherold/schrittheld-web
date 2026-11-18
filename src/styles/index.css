@@ -196,21 +196,76 @@
       transform: translate(-50%, -50%) rotate(360deg);
     }
   }
-  /* Maße des Hero-Bildes, damit Strahlen-Mittelpunkt und Sterne sich am Bild ausrichten (sections/Hero.tsx).
-     Halbe Breite = halbe Containerbreite abzüglich Seitenabstand, Bild ist 16:10. */
+  /* Maße der Hero-Bühne (sections/HeroCarousel.tsx), damit Strahlen-Mittelpunkt und Sterne sich am mittleren iPhone ausrichten.
+     Halbe Breite = halbe Containerbreite abzüglich Seitenabstand. Bühne ist auf dem Handy quadratisch, sonst 16:10.
+     --ctrl-h = Höhe von Beschriftung und Punkten unter der Bühne. */
   .hero-burst {
     --img-hw: min(576px, 50vw - 12px);
-    --img-hh: calc(var(--img-hw) * 0.625);
+    --img-hh: var(--img-hw);
     --hero-pb: 4rem;
+    --ctrl-h: 6.75rem;
   }
   @media (min-width: 640px) {
     .hero-burst {
       --img-hw: min(576px, 50vw - 24px);
+      --img-hh: calc(var(--img-hw) * 0.625);
     }
   }
   @media (min-width: 768px) {
     .hero-burst {
       --hero-pb: 6rem;
+    }
+  }
+
+  /* Coverflow: Position kommt als --o (Abstand zur Mitte), --s (Größe) und --r (Neigung) aus dem Script */
+  .hero-stage {
+    aspect-ratio: 1 / 1;
+  }
+  @media (min-width: 640px) {
+    .hero-stage {
+      aspect-ratio: 16 / 10;
+    }
+  }
+  .hero-slide {
+    position: absolute;
+    top: 4%;
+    left: 50%;
+    height: 92%;
+    aspect-ratio: 738 / 1400;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+    transform: translateX(calc(-50% + var(--o) * 80%)) scale(var(--s)) rotate(var(--r));
+    filter: drop-shadow(6px 6px 0 rgb(31 28 46 / 0.85)) brightness(0.9) saturate(0.85);
+    transition:
+      transform 0.75s cubic-bezier(0.34, 1.25, 0.64, 1),
+      opacity 0.45s ease,
+      filter 0.45s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .hero-slide.is-active {
+    cursor: default;
+    filter: drop-shadow(8px 8px 0 rgb(31 28 46 / 0.9));
+  }
+  .hero-stage {
+    cursor: grab;
+  }
+  /* Beim Wischen folgen die Phones direkt dem Finger, ohne Nachlauf */
+  .hero-stage.is-dragging {
+    cursor: grabbing;
+  }
+  .hero-stage.is-dragging .hero-slide {
+    transition: none;
+    cursor: grabbing;
+  }
+  .hero-slide img {
+    -webkit-user-drag: none;
+    user-select: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-slide {
+      transition-duration: 0.01s;
     }
   }
 

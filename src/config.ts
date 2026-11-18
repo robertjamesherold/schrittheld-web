@@ -5,7 +5,7 @@
  * z. B. '6740000000'. Solange sie leer ist, verlinken die Buttons auf die App-Store-Suche
  * und der Smart-App-Banner wird weggelassen.
  */
-export const APP_STORE_ID = ''
+export const APP_STORE_ID = '6830978656'
 
 export const appStoreUrl = (locale: 'de' | 'en'): string =>
   APP_STORE_ID

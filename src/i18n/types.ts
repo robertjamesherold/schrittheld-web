@@ -9,6 +9,17 @@ export type Rich = string
 
 export type FeatureKey = 'walk' | 'stairs' | 'bike' | 'board' | 'world' | 'friends' | 'streaks'
 export type ExtraKey = 'hero' | 'watch' | 'privacy'
+export type HeroSlideKey =
+  | 'foot'
+  | 'board'
+  | 'stairs'
+  | 'climb'
+  | 'bike'
+  | 'friends'
+  | 'world'
+  | 'badges'
+  | 'avatar'
+  | 'journey'
 export type PurchaseKey = 'periods' | 'bike' | 'worldTour' | 'unlockAll' | 'costumes'
 export type AvatarKey =
   | 'fuchs-held'
@@ -73,8 +84,14 @@ export interface Dict {
     subtitle: string
     pitch: Rich
     facts: [string, string, string]
-    screenshotAlt: string
     iconAlt: string
+    /** Karussell mit den Highlight-Screens (sections/HeroCarousel.tsx) */
+    carousel: {
+      label: string
+      pause: string
+      play: string
+      slides: Record<HeroSlideKey, { label: string; alt: string }>
+    }
   }
   features: {
     heading: string

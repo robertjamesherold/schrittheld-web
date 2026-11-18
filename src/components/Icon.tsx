@@ -42,6 +42,8 @@ const paths = {
   ),
   arrow: <path d="M5 12h13M13 6.5l5.5 5.5-5.5 5.5" />,
   plus: <path d="M12 5v14M5 12h14" />,
+  pause: <path d="M9 6v12M15 6v12" />,
+  play: <path d="M8 5.5v13l10-6.5z" />,
 } as const
 
 export type IconName = keyof typeof paths

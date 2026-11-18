@@ -55,8 +55,23 @@ export const de: Dict = {
     pitch:
       'Leg deinen Heimatort fest, und jedes Dorf und jede Stadt rundherum wird zum Etappenziel für deinen **selbst gestalteten Comic-Helden**. Für iPhone und Apple Watch.',
     facts: ['Kein Konto', 'Keine Werbung', 'Kein Tracking'],
-    screenshotAlt:
-      'Drei iPhones mit Schrittheld: die Route als 3D-Spielbrett, das nächste Etappenziel mit Foto und die Treppen-Challenge mit berühmten Bauwerken, davor einige der Comic-Helden',
+    carousel: {
+      label: 'Highlights der App',
+      pause: 'Karussell anhalten',
+      play: 'Karussell abspielen',
+      slides: {
+        foot: { label: 'Zu Fuß', alt: 'Startseite mit dem nächsten Etappenziel als Foto und den Schritten bis dorthin' },
+        board: { label: '3D-Spielbrett', alt: 'Die Route als 3D-Spielbrett mit Etappen, Häusern und Wäldern' },
+        stairs: { label: 'Treppen', alt: 'Treppen-Challenge mit berühmten Bauwerken und Bergen' },
+        climb: { label: 'Gipfeljagd', alt: 'Treppen-Spielbrett als Stufenlandschaft mit Bauwerken' },
+        bike: { label: 'Rad', alt: 'Rad-Challenge mit gefahrenen Kilometern' },
+        friends: { label: 'Freunde', alt: 'Freunde und ihre Helden im Vergleich' },
+        world: { label: 'Weltreise', alt: 'Weltreise zu Orten rund um den Globus' },
+        badges: { label: 'Abzeichen', alt: 'Serien und gesammelte Abzeichen' },
+        avatar: { label: 'Dein Held', alt: 'Avatar-Editor für den eigenen Comic-Helden' },
+        journey: { label: 'Jahresreise', alt: 'Die große Jahresreise in Kilometern' },
+      },
+    },
     iconAlt: 'App-Icon von Schrittheld',
   },
 

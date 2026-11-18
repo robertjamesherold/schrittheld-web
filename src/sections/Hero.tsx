@@ -5,20 +5,21 @@ import { Picture } from '../components/Picture'
 import { RichInline } from '../components/RichText'
 import { Sunburst } from '../components/Sunburst'
 import { useLocale } from '../i18n/useLocale'
-import { appIcon, heroImage } from '../lib/images'
+import { appIcon } from '../lib/images'
+import { HeroCarousel } from './HeroCarousel'
 
 /**
- * Aufmacher: Text oben, darunter das fertige Breitbild mit drei iPhones und den Figuren.
+ * Aufmacher: Text oben, darunter das Karussell mit den Highlight-Screens (HeroCarousel).
  * Der Strahlenkranz startet im Blau des Bildhintergrunds und wandert dann durch die ganze Palette (.hero-burst).
  */
 export const Hero = () => {
-  const { locale, t } = useLocale()
+  const { t } = useLocale()
   return (
     <Sunburst
       as="section"
       tone="skyDeep"
-      // Mittelpunkt genau hinter der Bildmitte: von unten Innenabstand + halbe Bildhöhe (Maße in .hero-burst)
-      center={{ x: '50%', y: 'calc(100% - var(--hero-pb) - var(--img-hh))' }}
+      // Mittelpunkt genau hinter dem mittleren iPhone: von unten Innenabstand + Steuerleiste + halbe Bühnenhöhe (Maße in .hero-burst)
+      center={{ x: '50%', y: 'calc(100% - var(--hero-pb) - var(--ctrl-h) - var(--img-hh))' }}
       aria-labelledby="hero-title"
       className="hero-burst burst-spin overflow-hidden border-b-3 border-ink pb-16 pt-24 sm:pt-28 md:pb-24"
     >
@@ -55,17 +56,7 @@ export const Hero = () => {
         </ul>
       </div>
 
-      <div className="mx-auto mt-12 max-w-[1200px] px-3 sm:px-6 md:mt-16">
-        <div className="-rotate-1 overflow-hidden rounded-comic border-3 border-ink shadow-comic-lg">
-          <Picture
-            pic={heroImage(locale)}
-            alt={t.hero.screenshotAlt}
-            sizes="(min-width: 1200px) 1150px, 95vw"
-            priority
-            imgClassName="block h-auto w-full"
-          />
-        </div>
-      </div>
+      <HeroCarousel />
     </Sunburst>
   )
 }

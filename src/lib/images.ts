@@ -4,13 +4,6 @@
  */
 import type { AvatarKey, Locale, PurchaseKey } from '../i18n/types'
 
-/* Aufmacher (2400 x 1500): drei iPhones und Figuren vor blauem Strahlenkranz, ohne Text. */
-const heroes = import.meta.glob<ImagePicture>('../../reference/hero/*.jpg', {
-  query: '?w=720;1100;1600;2200&format=avif;webp;jpg&as=picture',
-  import: 'default',
-  eager: true,
-})
-
 /* Abschnittsbilder (1600 x 1200): zwei iPhones vor farbigem Comic-Hintergrund. */
 const sections = import.meta.glob<ImagePicture>('../../reference/sections/*/*.jpg', {
   query: '?w=480;800;1200;1600&format=avif;webp;jpg&as=picture',
@@ -20,7 +13,7 @@ const sections = import.meta.glob<ImagePicture>('../../reference/sections/*/*.jp
 
 /* Einzelne iPhones, freigestellt (transparent) – daher PNG statt JPEG als Rückfall. */
 const phones = import.meta.glob<ImagePicture>('../../reference/phones/*/*.png', {
-  query: '?w=280;560&format=avif;webp;png&as=picture',
+  query: '?w=280;400;560;738&format=avif;webp;png&as=picture',
   import: 'default',
   eager: true,
 })
@@ -50,8 +43,6 @@ function pick(map: Record<string, ImagePicture>, match: (path: string) => boolea
   if (!hit) throw new Error('Bild fehlt in reference/')
   return hit[1]
 }
-
-export const heroImage = (locale: Locale): ImagePicture => pick(heroes, (p) => p.endsWith(`/hero/hero-${locale}.jpg`))
 
 export type SectionKey = 'on-foot' | 'board' | 'stairs' | 'bike' | 'friends' | 'world' | 'avatar'
 export const sectionImage = (locale: Locale, key: SectionKey): ImagePicture =>

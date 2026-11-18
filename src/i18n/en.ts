@@ -55,8 +55,23 @@ export const en: Dict = {
     pitch:
       'Pick your home town, and every village and city around it becomes a stage for **your very own comic hero**. For iPhone and Apple Watch.',
     facts: ['No account', 'No ads', 'No tracking'],
-    screenshotAlt:
-      'Three iPhones running Step Hero: the route as a 3D game board, the next stage with a photo, and the stairs challenge with famous landmarks, with some of the comic heroes in front',
+    carousel: {
+      label: 'App highlights',
+      pause: 'Pause carousel',
+      play: 'Play carousel',
+      slides: {
+        foot: { label: 'On Foot', alt: 'Home screen with a photo of the next stage and the steps left to get there' },
+        board: { label: '3D Game Board', alt: 'The route as a 3D game board with stages, houses and forests' },
+        stairs: { label: 'Stairs', alt: 'Stairs challenge with famous landmarks and mountains' },
+        climb: { label: 'Summit Hunt', alt: 'Stairs game board as a terraced landscape with landmarks' },
+        bike: { label: 'Bike', alt: 'Bike challenge with the distance ridden' },
+        friends: { label: 'Friends', alt: 'Friends and their heroes side by side' },
+        world: { label: 'World Tour', alt: 'World tour to places around the globe' },
+        badges: { label: 'Badges', alt: 'Streaks and collected badges' },
+        avatar: { label: 'Your Hero', alt: 'Avatar editor for your own comic hero' },
+        journey: { label: 'Year Journey', alt: 'The big year journey in kilometres' },
+      },
+    },
     iconAlt: 'Step Hero app icon',
   },
 
